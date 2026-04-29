@@ -105,7 +105,7 @@ const intenciones  = [
       palabras: [
           'easteregg'],
       respuestas: [
-          'Leandro mi encargado es tremendo puto',
+          'Leandro mi encargado es tremendo amargado',
       ]
     }
 ];
