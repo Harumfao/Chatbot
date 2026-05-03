@@ -1,3 +1,27 @@
+const url = "https://openlibrary.org/search.json?q=the+lord+of+the+rings";
+//const url = "https://openlibrary.org/search.json?q=test";
+const headers = new Headers({
+    "usser": "programming (email@gmail.com)"
+});
+
+const options = {
+    method: 'GET',
+    headers: headers}
+    
+    let devolverLibro = "";
+
+    // Funcion buscar libro en API
+    async function getBook(search){
+        const res = await fetch(url);
+        const data = await res.json();
+        console.log(data.docs[0])
+        devolverLibro = data.docs[0];
+        console.log(devolverLibro)
+    }; 
+    
+    getBook();
+
+//Funcion buscador de géneros disponibles
 const devolverGeneros = () => {
     let devolver = `Tenemos libros con los géneros `;
     const listaLibros = Object.values(libros);
@@ -105,7 +129,19 @@ const intenciones  = [
       palabras: [
           'easteregg'],
       respuestas: [
-          'Leandro mi encargado es tremendo amargado',
+          'Ella me espera más allá de la niebla. Mi reina, mi amor, mi corazón negro y roto.',
+      ]
+    },
+    {
+      tipo: 'search',
+      palabras: [
+          'search'],
+      respuestas: [
+        `Libro: ${devolverLibro.title}
+Autor: ${devolverLibro.author_name}
+Año de publicación: ${devolverLibro.first_publish_year}
+Ediciones: ${devolverLibro.edition_count}
+Stock: 35`
       ]
     }
 ];

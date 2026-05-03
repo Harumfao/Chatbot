@@ -1,5 +1,6 @@
-
 import {intenciones} from "./intenciones.js";
+
+let lastResp = "";
 
 // Abrir chatbot
 const btnChat = document.querySelector('#btn-chat');
@@ -20,7 +21,6 @@ const input = document.querySelector('#user-ask');
 const form = document.querySelector('form');
 const chat = document.querySelector('#chat');
 
-let lastResp = "";
 
 
 //Entrada y salida de mensaje
