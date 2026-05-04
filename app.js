@@ -1,6 +1,23 @@
+const url = "https://openlibrary.org/search.json?q=the+lord+of+the+rings";
+//const url = "https://openlibrary.org/search.json?q=test";
+const headers = new Headers({
+    "usser": "programming (email@gmail.com)"
+});
+
+const options = {
+    method: 'GET',
+    headers: headers}
+
 import {intenciones} from "./intenciones.js";
 
 let lastResp = "";
+
+// Funcion buscar libro en API
+    async function getBook(search){
+        const res = await fetch(url);
+        const data = await res.json();
+        return data.docs[0];
+    };
 
 // Abrir chatbot
 const btnChat = document.querySelector('#btn-chat');
@@ -24,7 +41,7 @@ const chat = document.querySelector('#chat');
 
 
 //Entrada y salida de mensaje
-form.addEventListener('submit', (e)=> {
+form.addEventListener('submit', async (e)=> {
     console.log("SE ENVIO EL FORM");
     e.preventDefault();  
     const texto = input.value;
@@ -54,7 +71,7 @@ console.log("ENTRO A COORDENADAS");
 
 
     } else {
-        const respuesta = obtenerRespuesta(texto);
+        const respuesta = await obtenerRespuesta(texto);
 
         setTimeout(() => {
             responder('Bot', respuesta);
@@ -63,23 +80,6 @@ console.log("ENTRO A COORDENADAS");
 
     input.value = '';
 });
-// form.addEventListener('submit', (e)=> {
-//     e.preventDefault();  
-//     const texto = input.value;
-//     lastResp = texto;
-//     if (texto.trim() === '') return;
-    
-//     responder('Usuario', texto);
-    
-//     const respuesta = obtenerRespuesta(texto);
-    
-//     setTimeout( () => {
-//         responder('Bot', respuesta);
-        
-//     }, 1300)
-    
-//     input.value = '';
-// })
 
 //Funciones
 
@@ -101,12 +101,20 @@ const responder = (remitente, mensaje) => {
 //     chat.scrollTop = chat.scrollHeight;
 // }
 
-const obtenerRespuesta = (texto) => {
+const obtenerRespuesta = async (texto) => {
     const mensaje = texto.toLowerCase().trim();
 
     for (let intencion of intenciones) {
         for (let palabra of intencion.palabras) {
           if (mensaje.includes(palabra)) {
+            if (intencion.tipo === `search`){
+                const libros = await getBook();
+                return `Libro: ${libros.title} \n
+                Autor: ${libros.author_name} \n
+                Año de publicación: ${libros.first_publish_year} \n
+                Ediciones: ${libros.edition_count} \n
+                Stock: 35`;
+            }
             const indice = Math.floor(Math.random() * intencion.respuestas.length);
               return intencion.respuestas[indice];
           }
