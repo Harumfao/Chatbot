@@ -1,4 +1,6 @@
-const url = "https://openlibrary.org/search.json?q=the+lord+of+the+rings";
+const url = "https://openlibrary.org/search.json?q=";
+// const url = "https://openlibrary.org/search.json?q=the+lord+of+the+rings";
+
 //const url = "https://openlibrary.org/search.json?q=test";
 const headers = new Headers({
     "usser": "programming (email@gmail.com)"
@@ -10,11 +12,11 @@ const options = {
 
 import {intenciones} from "./intenciones.js";
 
-let lastResp = "";
+let lastRespUrl = "";
 
 // Funcion buscar libro en API
-    async function getBook(search){
-        const res = await fetch(url);
+    async function getBook(lastRespUrl){
+        const res = await fetch(url+lastRespUrl);
         const data = await res.json();
         return data.docs[0];
     };
@@ -26,6 +28,7 @@ const chatContainer = document.querySelector('.chat-container');
 btnChat.addEventListener('click', () => {
     chatContainer.classList.toggle('abierto');
 });
+
 //Cerrar btn
 const btnClose = document.querySelector('#close');
 
@@ -45,7 +48,8 @@ form.addEventListener('submit', async (e)=> {
     console.log("SE ENVIO EL FORM");
     e.preventDefault();  
     const texto = input.value;
-    lastResp = texto;
+    lastRespUrl = texto.replace("search ","").replaceAll(" ","+");
+    console.log(lastRespUrl)
 
     if (texto.trim() === '') return;
 
@@ -108,12 +112,8 @@ const obtenerRespuesta = async (texto) => {
         for (let palabra of intencion.palabras) {
           if (mensaje.includes(palabra)) {
             if (intencion.tipo === `search`){
-                const libros = await getBook();
-                return `Libro: ${libros.title} \n
-                Autor: ${libros.author_name} \n
-                Año de publicación: ${libros.first_publish_year} \n
-                Ediciones: ${libros.edition_count} \n
-                Stock: 35`;
+                const libros = await getBook(lastRespUrl);
+                return `El libro ${libros.title} del autor ${libros.author_name} fué publicado en ${libros.first_publish_year} con ${libros.edition_count} ediciones, actualmente disponemos con 35 en stock.`;
             }
             const indice = Math.floor(Math.random() * intencion.respuestas.length);
               return intencion.respuestas[indice];
