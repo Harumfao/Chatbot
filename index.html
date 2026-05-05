@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <script type="module" src="app.js" defer></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="chatbot-container">
+    <img src="images/fondo.PNG" alt="fondo">
+
+    <button id="btn-chat">
+        <img src="images/msg.png" alt="mensaje">
+    </button>
+
+
+    <div class="chat-container">
+        <div class="head-bot">
+            <h1>Chatbot</h1>
+            <button id="close">X</button>
+        </div>
+
+        <div class="chat" id="chat"></div>
+
+        <div class="send-container">
+            <form>
+                <div class="btns-actions">
+                    <input type="text" id="user-ask" placeholder="Realiza una consulta...">
+                    <button id="send">➤</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    
+
+</body>
+</html>
