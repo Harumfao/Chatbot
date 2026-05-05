@@ -1,4 +1,4 @@
-const url = "https://openlibrary.org/earch.json?q=";
+const url = "https://openlibrary.org/search.json?q=";
 
 const headers = new Headers({
     "usser": "programming (email@gmail.com)"
