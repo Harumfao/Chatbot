@@ -1,7 +1,5 @@
-const url = "https://openlibrary.org/search.json?q=";
-// const url = "https://openlibrary.org/search.json?q=the+lord+of+the+rings";
+const url = "https://openlibrary.org/earch.json?q=";
 
-//const url = "https://openlibrary.org/search.json?q=test";
 const headers = new Headers({
     "usser": "programming (email@gmail.com)"
 });
@@ -16,9 +14,12 @@ let lastRespUrl = "";
 
 // Funcion buscar libro en API
     async function getBook(lastRespUrl){
+        try {
         const res = await fetch(url+lastRespUrl);
         const data = await res.json();
         return data.docs[0];
+    }
+    catch (error){ responder("Bot","Error al buscar el libro en la API, espere un momento y vuelva a intentar.")}
     };
 
 // Abrir chatbot
